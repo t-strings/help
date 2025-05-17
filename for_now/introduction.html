@@ -122,7 +122,7 @@ type(t"Hello {name}!")
         <pre><code class="language-python">name = "World"
 my_template = t"Hello {name}!"
 list(my_template)
-# ["Hello ", Interpolation("World")]
+# ["Hello ", Interpolation(value="World")]
 </code></pre>
         <p>
           That <code>Interpolation</code> type is <i>also</i> new in Python
@@ -275,8 +275,8 @@ def PostBody(body: str) -> Template:
 def render_post(post: Post) -> Template:
 	return t"""
 &lt;article&gt;
-	&lt;{PostHeader} title={post.title} created={post.created}&gt;
-	&lt;{PostBody} body={post.body}&gt;
+	&lt;{PostHeader} title={post.title} created={post.created} /&gt;
+	&lt;{PostBody} body={post.body} /&gt;
 &lt;/article&gt;
 	"""
 
@@ -292,11 +292,16 @@ html(template)
 # &lt;/article&gt;"
 </code></pre>
         <p>
+          Here, the <code>html()</code> function looks at the substitutions,
+          decides they are functions that can be called, and does some fancy
+          stuff to assemble the final HTML output.
+        </p>
+        <p>
           We can probably imagine <strong>all sorts of other magic</strong>, and
           not just for HTML!
         </p>
         <p>
-          But we'll stop there for now. There's a lot more to learn about
+          But we'll stop here for now. There's a lot more to learn about
           t-strings, so <a href="/">check it out</a>.
         </p>
       </div>
