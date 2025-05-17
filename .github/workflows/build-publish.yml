@@ -45,7 +45,8 @@ jobs:
       - name: Upload artifact to pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_build/html
+          # path: ./_build/html
+          path: ./for_now
 
   # Deployment job
   deploy:
