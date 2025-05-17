@@ -129,7 +129,24 @@ list(my_template)
           3.14. It's a fancy way of saying “this part of your string was
           <strong>substituted</strong>.”
         </p>
-        <p>So why do we want this?</p>
+        <p>
+          Yup. With t-strings, you can play with the parts of your strings.
+          Maybe for some reason you want static parts to be lowercase and
+          substitions to be uppercase? No problem:
+        </p>
+        <pre><code class="language-python">name = "World"
+my_template = t"Hello {name}!"
+parts: list[str] = []
+for item in my_template:
+	if isinstance(item, str):
+		parts.append(item.lower())
+	else:
+		parts.append(item.upper())
+print("".join(parts))
+# "hello WORLD!"
+</code></pre>
+        <p>Okay, you probably don't want to do exactly <i>that</i>.</p>
+        <p>So why <i>do</i> we want t-strings?</p>
         <p>
           Well, once you &mdash; the intrepid Python programmer &mdash; can get
           at the <i>parts</i> of your strings, and can know which were
