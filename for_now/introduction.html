@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>t-strings: coming soon to a Python near you</title>
+    <link rel="stylesheet" href="https://use.typekit.net/xls3jeb.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --font-serif: "dolly-new", "serif";
+        --font-sans: "auto-pro-new", "sans-serif";
+
+        --color-treeline: #0f1a2d;
+        --color-light-treeline: #1a2c47;
+        --color-foothills: #233d58;
+        --color-cloudbank: #486280;
+        --color-light-cloudbank: #66809e;
+        --color-lighter-cloudbank: #849ebc;
+        --color-sunset: #d19d4d;
+        --color-sound: #466b96;
+        --color-light-sound: #6489b4;
+        --color-wash: #d2d3d5;
+        --color-light-wash: #e0e1e3;
+        --color-lightest-wash: #f0f1f3;
+      }
+
+      a {
+        cursor: pointer;
+        color: var(--color-cloudbank);
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+
+      a:hover {
+        color: var(--color-sunset);
+        transition: color 0.2s;
+      }
+
+      html {
+        font-size: 22pt;
+      }
+
+      strong {
+        color: #333;
+      }
+
+      .team a {
+        text-decoration: none;
+      }
+
+      .team svg {
+        fill: var(--color-cloudbank);
+        height: 0.85em;
+        display: inline-block;
+        margin-left: 0.25em;
+        vertical-align: baseline;
+        transition: fill 0.2s;
+      }
+
+      .team svg:hover {
+        fill: var(--color-sunset);
+        transition: fill 0.2s;
+      }
+
+      code {
+        font-size: 0.85em;
+        background-color: var(--color-wash);
+        padding-left: 0.1em;
+        padding-right: 0.1em;
+        border-radius: 0.25em;
+      }
+
+      pre > code {
+        font-size: 0.625em;
+        font-weight: normal;
+        border-radius: 0.5em;
+        padding: 0;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/github-dark.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
+  </head>
+  <body>
+    <div
+      class="flex flex-col items-center min-h-screen bg-lightest-wash py-8 bg-light-cloudbank text-treeline"
+    >
+      <div class="mx-3 md:mx-auto max-w-sm pb-4 space-y-4">
+        <h1 class="font-serif font-bold text-cloudbank text-2xl">
+          A brief intro to t-strings
+        </h1>
+        <p>
+          <strong>Template strings</strong>, also known as
+          <strong>t-strings</strong>, are a new feature arriving in
+          <strong>Python 3.14</strong> later in 2025.
+        </p>
+        <p>They're like f-strings with <strong>superpowers</strong>.</p>
+        <p>They share the <strong>same syntax</strong>:</p>
+        <pre>
+<code class="language-python">name = "World"
+my_string = f"Hello {name}!"
+my_template = t"Hello {name}!"
+</code></pre>
+        <p>But they are <strong>different types</strong>:</p>
+        <pre>
+<code class="language-python">name = "World"
+type(f"Hello {name}!")
+# &lt;class 'str'&gt;
+type(t"Hello {name}!")
+# &lt;class 'string.templatelib.Template'&gt;
+</code></pre>
+        <p>
+          In other words, f-strings are <i>just</i> strings. But t-strings are a
+          <strong>new type</strong>, <code>Template</code>, that ships with
+          Python 3.14. It lets you access the
+          <strong>parts of your string</strong>:
+        </p>
+        <pre><code class="language-python">name = "World"
+my_template = t"Hello {name}!"
+list(my_template)
+# ["Hello ", Interpolation("World")]
+</code></pre>
+        <p>
+          That <code>Interpolation</code> type is <i>also</i> new in Python
+          3.14. It's a fancy way of saying “this part of your string was
+          <strong>substituted</strong>.”
+        </p>
+        <p>So why do we want this?</p>
+        <p>
+          Well, once you &mdash; the intrepid Python programmer &mdash; can get
+          at the <i>parts</i> of your strings, and can know which were
+          <strong>static</strong> and which were <strong>substituted</strong>,
+          you can do all sorts of <strong>fun and useful</strong> things you
+          couldn't before.
+        </p>
+        <p>Let's start with the useful.</p>
+        <p>
+          A funny story: f-strings are <strong>popular</strong>. Really, really
+          popular! They get used for all sorts of things... including things
+          they probably <i>shouldn't</i> be used for.
+        </p>
+        <p>
+          The most common (mis)uses of f-strings lead to security
+          vulnerabilities. We're talking
+          <a href="https://xkcd.com/327/" target="_blank"
+            >Little Bobby Tables</a
+          >
+          and
+          <a href="https://owasp.org/www-community/attacks/xss/" target="_blank"
+            >Cross-Site Scripting (XSS)</a
+          >. Not good at all!
+        </p>
+        <p>
+          Here, for your amusement, is a SQL injection vulnerability using
+          f-strings:
+        </p>
+        <pre><code class="language-python">from some_db_library import execute
+
+def get_query(name: str) -> str:
+	return f"SELECT * FROM students WHERE name = '{name}'"
+
+query = get_query("Robert'); DROP TABLE students;--")
+execute(query)  # ☠️ ☠️ ☠️
+</code></pre>
+        <p>
+          That <code>execute()</code> method takes a <code>str</code> as input.
+          It has <i>no way</i> to know whether that
+          <code>Robert');</code> nonsense was intended or not. (It wasn't!)
+        </p>
+        <p>
+          Now, imagine using the <strong>power of t-strings</strong> instead:
+        </p>
+        <pre><code class="language-python">from string.templatelib import Template
+from some_db_library import execute_t
+
+def get_query(name: str) -> Template:
+	return t"SELECT * FROM students WHERE name = '{name}'"
+
+query = get_query("Robert'); DROP TABLE students;--")
+execute_t(query)  # 🎉 🦄 👍
+</code></pre>
+        <p>
+          That's all it takes: if your SQL library supports t-strings, it can
+          <i>know</i> which parts of your string are safe and which need to be
+          escaped. No more Bobby Tables.
+        </p>
+        <p>Enough of the useful. <strong>Gimmie the fun</strong>!</p>
+        <p>
+          It turns out you can do a lot of fun stuff once you have the basic
+          features of t-strings.
+        </p>
+        <p>
+          Let's talk about HTML. Imagine you want to build a pretty big page in
+          Python. You can use t-strings to do this in a nice way:
+        </p>
+        <pre><code class="language-python">from some_html_library import html
+
+user = get_user(...)
+template = t"&lt;div data-id={user.id}&gt;{user.name}&lt;/div&gt;"
+html(template)
+# "&lt;div data-id='123'&gt;John&lt;/div&gt;"
+</code></pre>
+        <p>
+          Something subtle but cool just happened. We used curly braces to
+          include the <code>{user.id}</code>. But notice we
+          <i>didn't</i> include quotes <i>around</i> the
+          <code>data-id</code> attribute.
+        </p>
+        <p>
+          No big deal: the <code>html()</code> function is smart enough to see
+          this and add the quotes for us. (And smart enough to safely escape the
+          <code>{user.name}</code>, too.)
+        </p>
+        <p>
+          But we can do more! <i>Wicked laughter</i>.
+          <strong>Much more</strong>.
+        </p>
+        <p>What if we want to set a bunch of attributes all at once?</p>
+        <pre><code class="language-python">from some_html_library import html
+
+user = get_user(...)
+attribs = {
+	"id": "user", 
+	"data-id": user.id, 
+	"alt": user.name,
+}
+template = t"&lt;div {attribs}&gt;{user.name}&lt;/div&gt;"
+html(template)
+# "&lt;div id='user' data-id='123' alt='John'&gt;John&lt;/div&gt;"
+</code></pre>
+        <p>
+          Wow! We just wrote a lot of HTML with
+          <strong>very little string code</strong>.
+        </p>
+        <p>How did <i>that</i> work?</p>
+        <p>
+          The <code>html()</code> function can be as fancy as it wants to be. In
+          this case, it's probably <strong>parsing</strong> HTML, looking at the
+          <strong>type</strong> of the substitution (is it a <code>dict</code>?
+          a <code>bool</code>?), and figuring out where in the
+          <strong>grammar</strong> a given substition has been placed. Only then
+          does <code>html()</code> know how to format the
+          <code>{attribs}</code> substitution.
+        </p>
+        <p>
+          We can imagine all sorts of fancy HTML substitutions. Maybe we want to
+          write "component"-like code:
+        </p>
+        <pre><code class="language-python">from dataclasses import dataclass
+from datetime import datetime
+from string.templatelib import Template
+from some_html_library import html
+
+@dataclass
+class Post:
+	title: str
+	created: datetime
+	body: str
+
+def PostHeader(title: str, created: datetime) -> Template:
+	return t"""
+&lt;header&gt;
+	&lt;h1&gt;{title}&lt;/h1&gt;
+	&lt;p&gt;Posted on {created.strftime("%Y-%m-%d")}&lt;/p&gt;
+&lt;/header&gt;
+	"""
+
+def PostBody(body: str) -> Template:
+	return t"""&lt;div class="post-body"&gt;{body}&lt;/div&gt;"""
+
+def render_post(post: Post) -> Template:
+	return t"""
+&lt;article&gt;
+	&lt;{PostHeader} title={post.title} created={post.created}&gt;
+	&lt;{PostBody} body={post.body}&gt;
+&lt;/article&gt;
+	"""
+
+post = get_post(...)
+template = render_post(post)
+html(template)
+# "&lt;article&gt;
+#     &lt;header&gt;
+#         &lt;h1&gt;My Post&lt;/h1&gt;
+#         &lt;p&gt;Posted on 2023-10-01&lt;/p&gt;
+#     &lt;/header&gt;
+#     &lt;div class="post-body"&gt;Hello, world!&lt;/div&gt;
+# &lt;/article&gt;"
+</code></pre>
+        <p>
+          We can probably imagine <strong>all sorts of other magic</strong>, and
+          not just for HTML!
+        </p>
+        <p>
+          But we'll stop there for now. There's a lot more to learn about
+          t-strings, so <a href="/">check it out</a>.
+        </p>
+      </div>
+    </div>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
