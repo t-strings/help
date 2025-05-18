@@ -157,7 +157,7 @@ for item in my_template:
 	if isinstance(item, str):
 		parts.append(item.lower())
 	else:
-		parts.append(item.upper())
+		parts.append(item.value.upper())
 print("".join(parts))
 # "hello WORLD!"
 </code></pre>
