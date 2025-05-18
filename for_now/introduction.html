@@ -187,9 +187,9 @@ print("".join(parts))
         <pre><code class="language-python">from some_db_library import execute
 
 def get_student(name: str):
-	return execute(
-      f"SELECT * FROM students WHERE name = '{name}'"
-  )
+    return execute(
+        f"SELECT * FROM students WHERE name = '{name}'"
+    )
 
 get_student("Robert'); DROP TABLE students;--") # ☠️ ☠️ ☠️
 </code></pre>
@@ -204,9 +204,9 @@ get_student("Robert'); DROP TABLE students;--") # ☠️ ☠️ ☠️
         <pre><code class="language-python">from some_db_library import execute_t
 
 def get_student(name: str):
-	return execute_t(
-      t"SELECT * FROM students WHERE name = '{name}'"
-  )
+    return execute_t(
+        t"SELECT * FROM students WHERE name = '{name}'"
+    )
 
 get_student("Robert'); DROP TABLE students;--") # 🎉 🦄 👍
 </code></pre>
