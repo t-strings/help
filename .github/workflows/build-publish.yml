@@ -36,7 +36,7 @@ jobs:
       - name: Install the project
         run: uv sync --locked --all-extras --dev
       - name: Build sphinx site
-        run: uv run make playground
+        run: uv run make build-playground
       - name: Copy CNAME from root into build
         run: |
           if [ -f CNAME ]; then

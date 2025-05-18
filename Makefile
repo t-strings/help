@@ -16,15 +16,15 @@ help:
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+# %: Makefile
+# 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 
 .PHONY: build-playground
 build-playground: check-jq
 	@echo "Building playground..."
-	rm -rf public/lite
-    jupyter lite build
+	rm -rf public/lite && \
+    jupyter lite build && \
 	python tools/patch_jlite_json.py \
 	  public/lite/jupyter-lite.json && \
 	cp -frpv pyodide public/lite/
