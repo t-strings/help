@@ -38,7 +38,8 @@
       }
 
       html {
-        font-size: 22pt;
+        font-size: 16pt;
+        @apply md:text-[22pt];
       }
 
       strong {
@@ -71,11 +72,26 @@
         border-radius: 0.25em;
       }
 
-      pre > code {
+      /* pre > code {
         font-size: 0.6em;
         font-weight: normal;
         border-radius: 0.5em;
         padding: 0;
+      } */
+      pre {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+
+      pre > code {
+        font-size: 0.7em;
+        @apply md:text-[0.6em];
+        font-weight: normal;
+        border-radius: 0.5em;
+        padding: 0;
+        white-space: pre;
+        display: inline-block;
+        min-width: 100%;
       }
     </style>
     <link
@@ -89,8 +105,8 @@
     <div
       class="flex flex-col items-center min-h-screen bg-lightest-wash py-8 bg-light-cloudbank text-treeline"
     >
-      <div class="mx-3 md:mx-auto max-w-sm pb-4 space-y-4">
-        <h1 class="font-serif font-bold text-cloudbank text-2xl">
+      <div class="mx-3 w-[95%] md:mx-auto md:max-w-sm pb-4 space-y-4">
+        <h1 class="font-serif font-bold text-cloudbank text-3xl">
           A brief intro to t-strings
         </h1>
         <p>
@@ -116,7 +132,7 @@ type(t"Hello {name}!")
         <p>
           In other words, f-strings are <i>just</i> strings. But t-strings are a
           <strong>new type</strong>, <code>Template</code>, that ships with
-          Python 3.14. It lets you access the
+          Python 3.14. Templates lets you access the
           <strong>parts of your string</strong>:
         </p>
         <pre><code class="language-python">name = "World"

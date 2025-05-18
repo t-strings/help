@@ -25,6 +25,11 @@
         --color-lightest-wash: #f0f1f3;
       }
 
+      html {
+        font-size: 16pt;
+        @apply md:text-[22pt];
+      }
+
       a {
         cursor: pointer;
         color: var(--color-cloudbank);
@@ -35,10 +40,6 @@
       a:hover {
         color: var(--color-sunset);
         transition: color 0.2s;
-      }
-
-      html {
-        font-size: 22pt;
       }
 
       strong {
@@ -69,7 +70,7 @@
       class="flex flex-col items-center min-h-screen bg-lightest-wash py-8 bg-light-cloudbank text-treeline"
     >
       <div class="mx-3 md:mx-auto max-w-sm pb-4 space-y-4">
-        <h1 class="font-serif font-bold text-cloudbank text-2xl">
+        <h1 class="font-serif font-bold text-cloudbank text-3xl">
           Hello, t-strings!
         </h1>
         <p>
@@ -96,7 +97,7 @@
         </p>
         <p>Visit again soon for <i>much</i> more.</p>
         <p>Please say hello! The <strong>t-strings team</strong> is:</p>
-        <ul class="text-xs font-sans list-disc list-inside team space-y-1 mx-4">
+        <ul class="text-sm font-sans list-disc list-inside team space-y-1 mx-4">
           <!-- KOUDAI-->
           <li>
             Koudai Aono
