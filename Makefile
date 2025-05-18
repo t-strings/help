@@ -18,3 +18,32 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+
+.PHONY: build-playground
+build-playground: check-jq
+	@echo "Building playground..."
+	rm -rf public/lite
+    jupyter lite build
+	python tools/patch_jlite_json.py \
+	  public/lite/jupyter-lite.json && \
+	cp -frpv pyodide public/lite/
+
+
+
+.PHONY: wheel
+wheel: clean-wheel
+	$(VENV_PATH)/bin/python -m build
+
+
+.PHONY: clean-wheel
+clean-wheel:
+	rm -rf public/lite
+
+.PHONY: clean-playground
+clean-playground:
+	rm -rf public/lite
+
+.PHONY: check-jq
+check-jq:
+	which jq || (echo "jq is not installed. Please install jq to continue." && exit 1)
