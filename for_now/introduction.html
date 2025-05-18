@@ -65,19 +65,13 @@
       }
 
       code {
-        font-size: 0.85em;
+        font-size: 0.8em;
         background-color: var(--color-wash);
         padding-left: 0.1em;
         padding-right: 0.1em;
         border-radius: 0.25em;
       }
 
-      /* pre > code {
-        font-size: 0.6em;
-        font-weight: normal;
-        border-radius: 0.5em;
-        padding: 0;
-      } */
       pre {
         max-width: 100%;
         overflow-x: auto;
@@ -130,10 +124,10 @@ type(t"Hello {name}!")
 # &lt;class 'string.templatelib.Template'&gt;
 </code></pre>
         <p>
-          In other words, f-strings are <i>just</i> strings. But t-strings are a
+          F-strings are <i>just</i> strings. But t-strings give you a
           <strong>new type</strong>, <code>Template</code>, that ships with
-          Python 3.14. Templates let you access the
-          <strong>parts of your string</strong>:
+          Python 3.14. Templates let you access the <strong>parts</strong> of
+          your string:
         </p>
         <pre><code class="language-python">name = "World"
 my_template = t"Hello {name}!"
@@ -143,18 +137,18 @@ list(my_template)
         <p>
           That <code>Interpolation</code> type is <i>also</i> new in Python
           3.14. It's a fancy way of saying “this part of your string was
-          <strong>substituted</strong>.”
+          substituted.”
         </p>
         <p>
           Once you &mdash; the intrepid Python programmer &mdash; can get at the
-          <strong>parts</strong> of your strings, and can know which were
-          <strong>static</strong> and which were <strong>substituted</strong>,
+          <strong>parts</strong> of your strings, and can know which are
+          <strong>static</strong> and which are <strong>substituted</strong>,
           you can do all sorts of <strong>fun and useful</strong> things you
           couldn't before.
         </p>
         <p>
-          Maybe for some reason you want your static parts to be lowercase and
-          substitions to be uppercase? No problem:
+          Maybe for some reason you want to render your static parts in
+          lowercase and your substitions in uppercase?<br />No problem:
         </p>
         <pre><code class="language-python">name = "World"
 my_template = t"Hello {name}!"
@@ -222,12 +216,12 @@ execute_t(query)  # 🎉 🦄 👍
         </p>
         <p>Enough of the useful. <strong>Gimmie the fun</strong>!</p>
         <p>
-          It turns out you can do a lot of fun stuff once you have the basic
-          features of t-strings.
+          It turns out you can do a lot of fun stuff once you have access to
+          your string's parts.
         </p>
         <p>
-          Let's talk about HTML. Imagine you want to build a pretty big page in
-          Python. You can use t-strings to do this in a nice way:
+          Let's talk about HTML. Maybe you sometimes write some in Python. You
+          can use t-strings to do this in a nice way:
         </p>
         <pre><code class="language-python">from some_html_library import html
 
