@@ -1,0 +1,10 @@
+{
+  "litePluginSettings": {
+    "@jupyterlite/pyodide-kernel-extension:kernel": {
+      "pyodideUrl": "./pyodide/pyodide.js",
+      "loadPyodideOptions": {
+        "indexURL": "./pyodide/"
+      }
+    }
+  }
+}
