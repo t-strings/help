@@ -40,7 +40,7 @@ jobs:
       - name: Copy CNAME from root into build
         run: |
           if [ -f CNAME ]; then
-            cp CNAME _build/html/CNAME
+            cp CNAME public/CNAME
           fi
       - name: Upload artifact to pages
         uses: actions/upload-pages-artifact@v3
