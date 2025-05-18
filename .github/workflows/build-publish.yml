@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # path: ./_build/html
-          path: ./for_now
+          path: ./public
 
   # Deployment job
   deploy:
