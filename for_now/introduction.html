@@ -201,8 +201,7 @@ get_student("Robert'); DROP TABLE students;--") # ☠️ ☠️ ☠️
         <p>
           Now, imagine using the <strong>power of t-strings</strong> instead:
         </p>
-        <pre><code class="language-python">from string.templatelib import Template
-from some_db_library import execute_t
+        <pre><code class="language-python">from some_db_library import execute_t
 
 def get_student(name: str):
 	return execute_t(
