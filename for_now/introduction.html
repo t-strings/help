@@ -146,8 +146,14 @@ list(my_template)
           <strong>substituted</strong>.”
         </p>
         <p>
-          Yup. With t-strings, you can play with the parts of your strings.
-          Maybe for some reason you want static parts to be lowercase and
+          Once you &mdash; the intrepid Python programmer &mdash; can get at the
+          <strong>parts</strong> of your strings, and can know which were
+          <strong>static</strong> and which were <strong>substituted</strong>,
+          you can do all sorts of <strong>fun and useful</strong> things you
+          couldn't before.
+        </p>
+        <p>
+          Maybe for some reason you want your static parts to be lowercase and
           substitions to be uppercase? No problem:
         </p>
         <pre><code class="language-python">name = "World"
@@ -163,13 +169,6 @@ print("".join(parts))
 </code></pre>
         <p>Okay, you probably don't want to do exactly <i>that</i>.</p>
         <p>So why <i>do</i> we want t-strings?</p>
-        <p>
-          Well, once you &mdash; the intrepid Python programmer &mdash; can get
-          at the <i>parts</i> of your strings, and can know which were
-          <strong>static</strong> and which were <strong>substituted</strong>,
-          you can do all sorts of <strong>fun and useful</strong> things you
-          couldn't before.
-        </p>
         <p>Let's start with the useful.</p>
         <p>
           A funny story: f-strings are <strong>popular</strong>. Really, really
