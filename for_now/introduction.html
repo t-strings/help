@@ -186,11 +186,12 @@ print("".join(parts))
         </p>
         <pre><code class="language-python">from some_db_library import execute
 
-def get_query(name: str) -> str:
-	return f"SELECT * FROM students WHERE name = '{name}'"
+def get_student(name: str):
+	return execute(
+      f"SELECT * FROM students WHERE name = '{name}'"
+  )
 
-query = get_query("Robert'); DROP TABLE students;--")
-execute(query)  # ☠️ ☠️ ☠️
+get_student("Robert'); DROP TABLE students;--") # ☠️ ☠️ ☠️
 </code></pre>
         <p>
           That <code>execute()</code> method takes a <code>str</code> as input.
@@ -203,11 +204,12 @@ execute(query)  # ☠️ ☠️ ☠️
         <pre><code class="language-python">from string.templatelib import Template
 from some_db_library import execute_t
 
-def get_query(name: str) -> Template:
-	return t"SELECT * FROM students WHERE name = '{name}'"
+def get_student(name: str):
+	return execute_t(
+      t"SELECT * FROM students WHERE name = '{name}'"
+  )
 
-query = get_query("Robert'); DROP TABLE students;--")
-execute_t(query)  # 🎉 🦄 👍
+get_student("Robert'); DROP TABLE students;--") # 🎉 🦄 👍
 </code></pre>
         <p>
           That's all it takes: if your SQL library supports t-strings, it can
