@@ -50,3 +50,7 @@ clean-playground:
 .PHONY: check-jq
 check-jq:
 	which jq || (echo "jq is not installed. Please install jq to continue." && exit 1)
+
+convert-tdom-examples-to-ipynb:
+	python tools/convert_py_to_ipynb.py
+	@echo "Converted tdom examples to ipynb format."
