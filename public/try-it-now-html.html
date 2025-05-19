@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>t-strings: Try it now!</title>
+    <link rel="stylesheet" href="https://use.typekit.net/xls3jeb.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --font-serif: "dolly-new", "serif";
+        --font-sans: "auto-pro-new", "sans-serif";
+
+        --color-treeline: #0f1a2d;
+        --color-light-treeline: #1a2c47;
+        --color-foothills: #233d58;
+        --color-cloudbank: #486280;
+        --color-light-cloudbank: #66809e;
+        --color-lighter-cloudbank: #849ebc;
+        --color-sunset: #d19d4d;
+        --color-sound: #466b96;
+        --color-light-sound: #6489b4;
+        --color-wash: #d2d3d5;
+        --color-light-wash: #e0e1e3;
+        --color-lightest-wash: #f0f1f3;
+      }
+
+      html {
+        font-size: 16pt;
+        @apply md:text-[22pt];
+      }
+
+      a {
+        cursor: pointer;
+        color: var(--color-cloudbank);
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+
+      a:hover {
+        color: var(--color-sunset);
+        transition: color 0.2s;
+      }
+
+      .text-xxs {
+        font-size: 0.7em;
+      }
+
+      nav > a {
+        color: var(--color-gray-500);
+      }
+
+      strong {
+        color: #333;
+      }
+
+      .team a {
+        text-decoration: none;
+      }
+
+      .team svg {
+        fill: var(--color-cloudbank);
+        height: 0.85em;
+        display: inline-block;
+        margin-left: 0.25em;
+        vertical-align: baseline;
+        transition: fill 0.2s;
+      }
+
+      .team svg:hover {
+        fill: var(--color-sunset);
+        transition: fill 0.2s;
+      }
+
+      code {
+        font-size: 0.8em;
+        background-color: var(--color-wash);
+        padding-left: 0.1em;
+        padding-right: 0.1em;
+        border-radius: 0.25em;
+      }
+
+      pre {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+
+      pre > code {
+        font-size: 0.7em;
+        @apply md:text-[0.6em];
+        font-weight: normal;
+        border-radius: 0.5em;
+        padding: 0;
+        white-space: pre;
+        display: inline-block;
+        min-width: 100%;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/github-dark.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/bash.min.js"></script>
+  </head>
+  <body>
+    <div
+      class="flex flex-col items-center min-h-screen bg-lightest-wash py-8 bg-light-cloudbank text-treeline"
+    >
+      <div class="mx-3 w-[95%] md:mx-auto md:max-w-sm pb-4 space-y-4">
+        <nav class="text-xxs flex flex-row gap-x-4">
+          <a href="/">home</a>
+          <a href="/introduction.html">brief intro</a>
+          <a href="/playground.html">playground</a>
+          <a href="/try-it-now.html">try it now</a>
+        </nav>
+        <h1 class="font-serif font-bold text-cloudbank text-3xl">
+          Try t-strings now!
+        </h1>
+        <p>
+          Excited to try <strong>t-strings</strong> before Python 3.14's official release? You've got options!
+        </p>
+        
+        <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
+          Option 1: Python 3.14.0b1
+        </h2>
+        <p>
+          The simplest way to start experimenting with t-strings is to download and install the Python 3.14.0b1 beta release:
+        </p>
+        <p>
+          <a href="https://www.python.org/downloads/release/python-3140b1/" target="_blank">Download Python 3.14.0b1</a>
+        </p>
+        <p>
+          After installation, you can verify you have the right version and start experimenting:
+        </p>
+        <pre><code class="language-bash">$ python --version
+Python 3.14.0b1
+
+$ python
+>>> name = "World"
+>>> t"Hello {name}!"
+Template(strings=('Hello ', '!'), interpolations=(Interpolation('World', 'name', None, ''),))
+</code></pre>
+
+        <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
+          Option 2: Docker
+        </h2>
+        <p>
+          Don't want to install anything on your system? Use Docker to spin up a Python 3.14 container:
+        </p>
+        <pre><code class="language-bash"># Pull the image
+$ docker pull python:3.14.0b1-bookworm
+
+# Run an interactive Python shell
+$ docker run -it --rm python:3.14.0b1-bookworm python
+
+>>> name = "World"
+>>> t"Hello {name}!"  # Try t-strings!
+</code></pre>
+        <p>
+          You can also use the <code>3.14-rc-bookworm</code> tag which will always point to the latest release candidate.
+        </p>
+
+        <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
+          Option 3: Our Browser Playground
+        </h2>
+        <p>
+          The easiest option of all! <strong>No installation required</strong> - just visit our <a href="/playground.html">Playground</a> to try t-strings directly in your browser.
+        </p>
+        <p>
+          Our playground uses <a href="https://pyodide.org/" target="_blank">Pyodide</a> (with a 3.14.0b1 patch) and <a href="https://jupyterlite.readthedocs.io/en/latest/" target="_blank">JupyterLite</a> to run Python entirely in your browser. It's a great way to experiment without installing anything!
+        </p>
+
+        <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
+          What's Next?
+        </h2>
+        <p>
+          Once you're up and running with Python 3.14, check out our <a href="/introduction.html">Brief Introduction</a> to understand what t-strings can do, or dive right into the <a href="https://github.com/davepeck/pep750-examples" target="_blank">examples repository</a> for inspiration.
+        </p>
+        <p>
+          <strong>Feeling ambitious?</strong> Join us at our PyCon sprint today (Monday, May 19, Room 309, starting at 9AM) to help build the t-strings ecosystem!
+        </p>
+        <p>
+          Happy template stringing!
+        </p>
+      </div>
+    </div>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
