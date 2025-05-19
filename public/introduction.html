@@ -164,9 +164,7 @@ list(my_template)
           Maybe for some reason you want to render your static parts in
           lowercase and your substitions in uppercase?
         </p>
-        <p>
-          No problem:
-        </p>
+        <p>No problem:</p>
         <pre><code class="language-python">name = "World"
 my_template = t"Hello {name}!"
 
@@ -183,10 +181,10 @@ print(lower_upper(my_template))
 # "hello WORLD!"
 </code></pre>
         <p>
-          Okay, you probably don't want to do exactly <i>that</i>. But this example
-          demonstrates that the <i>power of t-strings comes not from the template
-          itself, but from the code you (or someone else!) writes to process it
-          into a string</i>.
+          Okay, you probably don't want to do exactly <i>that</i>. But this
+          example demonstrates that the power of t-strings comes not from the
+          template itself, but from the code you (or someone else!) writes to
+          process it into a string.
         </p>
         <p>So why <i>do</i> we want t-strings?</p>
         <p>Let's start with the useful.</p>
