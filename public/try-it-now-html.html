@@ -121,9 +121,19 @@
         <p>
           Excited to try <strong>t-strings</strong> before Python 3.14's official release? You've got options!
         </p>
-        
+
+          <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
+          Option 1: Our Browser Playground
+        </h2>
+        <p>
+          The easiest option of all! <strong>No installation required</strong> - just visit our <a href="/playground.html">Playground</a> to try t-strings directly in your browser.
+        </p>
+        <p>
+          Our playground uses <a href="https://pyodide.org/" target="_blank">Pyodide</a> (with a 3.14.0b1 patch) and <a href="https://jupyterlite.readthedocs.io/en/latest/" target="_blank">JupyterLite</a> to run Python entirely in your browser. It's a great way to experiment without installing anything!
+        </p>
+
         <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
-          Option 1: Python 3.14.0b1
+          Option 2: Python 3.14.0b1
         </h2>
         <p>
           The simplest way to start experimenting with t-strings is to download and install the Python 3.14.0b1 beta release:
@@ -144,7 +154,7 @@ Template(strings=('Hello ', '!'), interpolations=(Interpolation('World', 'name',
 </code></pre>
 
         <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
-          Option 2: Docker
+          Option 3: Docker
         </h2>
         <p>
           Don't want to install anything on your system? Use Docker to spin up a Python 3.14 container:
@@ -160,16 +170,6 @@ $ docker run -it --rm python:3.14.0b1-bookworm python
 </code></pre>
         <p>
           You can also use the <code>3.14-rc-bookworm</code> tag which will always point to the latest release candidate.
-        </p>
-
-        <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
-          Option 3: Our Browser Playground
-        </h2>
-        <p>
-          The easiest option of all! <strong>No installation required</strong> - just visit our <a href="/playground.html">Playground</a> to try t-strings directly in your browser.
-        </p>
-        <p>
-          Our playground uses <a href="https://pyodide.org/" target="_blank">Pyodide</a> (with a 3.14.0b1 patch) and <a href="https://jupyterlite.readthedocs.io/en/latest/" target="_blank">JupyterLite</a> to run Python entirely in your browser. It's a great way to experiment without installing anything!
         </p>
 
         <h2 class="font-serif font-bold text-cloudbank text-xl mt-6">
