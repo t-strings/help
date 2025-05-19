@@ -10,6 +10,8 @@ OUT.mkdir(parents=True, exist_ok=True)
 notebooks = []
 
 for init_py in TDOM.joinpath("examples").rglob("__init__.py"):
+    if init_py.parent.parent.name == "examples":
+        continue
     name = init_py.parent.name                       # e.g. call_function
     ipynb = OUT / f"{name}.ipynb"
     nbf.write(jupytext.read(init_py), ipynb)
