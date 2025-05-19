@@ -162,20 +162,32 @@ list(my_template)
         </p>
         <p>
           Maybe for some reason you want to render your static parts in
-          lowercase and your substitions in uppercase?<br />No problem:
+          lowercase and your substitions in uppercase?
+        </p>
+        <p>
+          No problem:
         </p>
         <pre><code class="language-python">name = "World"
 my_template = t"Hello {name}!"
-parts: list[str] = []
-for item in my_template:
-	if isinstance(item, str):
-		parts.append(item.lower())
-	else:
-		parts.append(item.value.upper())
-print("".join(parts))
+
+def lower_upper(template: Template) -> str:
+    parts: list[str] = []
+    for item in template:
+        if isinstance(item, str):
+            parts.append(item.lower())
+        else:
+            parts.append(item.value.upper())
+    return "".join(parts)
+
+print(lower_upper(my_template))
 # "hello WORLD!"
 </code></pre>
-        <p>Okay, you probably don't want to do exactly <i>that</i>.</p>
+        <p>
+          Okay, you probably don't want to do exactly <i>that</i>. But this example
+          demonstrates that the <i>power of t-strings comes not from the template
+          itself, but from the code you (or someone else!) writes to process it
+          into a string</i>.
+        </p>
         <p>So why <i>do</i> we want t-strings?</p>
         <p>Let's start with the useful.</p>
         <p>
@@ -265,8 +277,8 @@ html(template)
 
 user = get_user(...)
 attribs = {
-	"id": "user", 
-	"data-id": user.id, 
+	"id": "user",
+	"data-id": user.id,
 	"alt": user.name,
 }
 template = t"&lt;div {attribs}&gt;{user.name}&lt;/div&gt;"
