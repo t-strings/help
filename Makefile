@@ -28,7 +28,8 @@ build-playground: check-jq
     WHL_FILE=$$(ls pypi | grep .whl) ;\
 	python tools/patch_jlite_json.py \
 	  public/lite/jupyter-lite.json \
-	  --whl-url "pypi/$$WHL_FILE" && \
+	  --whl-url "pypi/$$WHL_FILE" \
+	  --disable-dirty && \
 	cp -frpv pyodide public/lite/ && \
 	cp -frpv pypi public/lite/extensions/@jupyterlite/pyodide-kernel-extension/static/
 
