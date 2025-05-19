@@ -21,6 +21,9 @@ opt = plugin.setdefault("loadPyodideOptions", {})
 opt["indexURL"] = "./pyodide/"
 opt["packages"] = [args.whl_url]
 
+nb_key = "@jupyterlab/notebook-extension:tracker"
+cfg.setdefault(nb_key, {})["autoStartDefaultKernel"] = True
+
 if args.disable_dirty:
     de = cfg.setdefault("disabledExtensions", [])
     plug_id = "@jupyterlab/application-extension:dirty"
