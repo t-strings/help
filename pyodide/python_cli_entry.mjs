@@ -137,7 +137,11 @@ async function main() {
 
   let errcode;
   try {
-    errcode = py._module._run_main();
+    if (py._module.jspiSupported) {
+      errcode = await py._module.promisingRunMain();
+    } else {
+      errcode = py._module._run_main();
+    }
   } catch (e) {
     if (e.constructor.name === "ExitStatus") {
       process.exit(e.status);
