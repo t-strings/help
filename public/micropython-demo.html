@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>t-strings: MicroPython Demo</title>
+  <link rel="stylesheet" href="https://use.typekit.net/xls3jeb.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- CodeMirror for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/monokai.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --font-serif: "dolly-new",serif;
+      --font-sans: "auto-pro-new",sans-serif;
+      --color-treeline:#0f1a2d;
+      --color-cloudbank:#486280;
+      --color-sunset:#d19d4d;
+      --color-wash:#d2d3d5;
+      --color-lightest-wash:#f0f1f3;
+    }
+    html{font-size:16pt;@apply md:text-[22pt];}
+    a{cursor:pointer;color:var(--color-cloudbank);text-decoration:underline;transition:color .2s;}
+    a:hover{color:var(--color-sunset);}
+    .text-xxs{font-size:.7em;}
+    strong{color:#333;}
+    code {
+      font-size: 0.8em;
+      background-color: var(--color-wash);
+      padding-left: 0.1em;
+      padding-right: 0.1em;
+      border-radius: 0.25em;
+    }
+    pre {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    pre > code {
+      font-size: 0.7em;
+      @apply md:text-[0.6em];
+      font-weight: normal;
+      border-radius: 0.5em;
+      padding: 0.5em;
+      white-space: pre;
+      display: block;
+      background-color: #1e2329;
+      color: #abb2bf;
+    }
+    .demo-section {
+      border-top: 2px solid var(--color-wash);
+      padding-top: 1.5em;
+      margin-top: 1.5em;
+    }
+    .demo-section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+    .output-box {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.5em;
+      padding: 0.5em;
+      margin: 0.5em 0;
+      font-family: monospace;
+      font-size: 0.8em;
+      min-height: 2em;
+      white-space: pre-wrap;
+    }
+    .run-button {
+      background-color: var(--color-cloudbank);
+      color: white;
+      padding: 0.25em 1em;
+      border-radius: 0.25em;
+      border: none;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: background-color 0.2s;
+      margin-top: 0.5em;
+    }
+    .run-button:hover {
+      background-color: var(--color-sunset);
+    }
+    .run-button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+    .loading {
+      color: var(--color-cloudbank);
+      font-style: italic;
+    }
+    .code-editor {
+      margin: 0.5em 0;
+      border-radius: 0.5em;
+      overflow: hidden;
+      border: 1px solid #3e4451;
+    }
+    .CodeMirror {
+      height: auto;
+      min-height: 150px;
+      max-height: 300px;
+      font-size: 0.8em;
+      font-family: monospace;
+    }
+    .CodeMirror-scroll {
+      min-height: 150px;
+    }
+    /* Fix line number gutter width */
+    .CodeMirror-gutters {
+      min-width: 40px;
+    }
+    .CodeMirror-linenumber {
+      padding: 0 5px;
+    }
+    .button-group {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
+    .reset-button {
+      background-color: #6c757d;
+      color: white;
+      padding: 0.25em 1em;
+      border-radius: 0.25em;
+      border: none;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: background-color 0.2s;
+    }
+    .reset-button:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <div class="flex flex-col items-center min-h-screen bg-lightest-wash py-8 text-treeline">
+    <div class="mx-3 md:mx-auto max-w-md pb-4 space-y-4">
+      <nav class="text-xxs flex gap-x-4">
+        <a href="/">home</a>
+        <a href="/introduction.html">brief intro</a>
+        <a href="/try-it-now.html">try it now</a>
+        <a href="/playground.html">playground</a>
+        <a href="/micropython-demo.html">micropython demo</a>
+      </nav>
+
+      <h1 class="font-serif font-bold text-cloudbank text-3xl">
+        MicroPython t-strings Demo
+      </h1>
+
+      <p>
+        Experience <strong>t-strings</strong> running directly with MicroPython!
+        This demo uses our custom MicroPython build with native PEP 750 support.
+      </p>
+
+      <div id="loading-message" class="loading">
+        <p>Loading MicroPython environment...</p>
+      </div>
+
+      <div id="demo-content" style="display: none;">
+        <!-- Basic t-string creation -->
+        <div class="demo-section">
+          <h2 class="font-serif font-bold text-cloudbank text-xl">Creating Your First t-string</h2>
+          <p class="text-sm mb-2">
+            T-strings use the same syntax as f-strings, but create Template objects instead of strings:
+          </p>
+          <textarea id="code-example1" class="code-editor">name = "World"
+greeting = t"Hello {name}!"
+print(f"Type: {type(greeting)}")
+print(f"Value: {greeting}")</textarea>
+          <div class="button-group">
+            <button class="run-button" onclick="runExample(1)">Run Example</button>
+            <button class="reset-button" onclick="resetExample(1)">Reset</button>
+          </div>
+          <div id="output-example1" class="output-box"></div>
+        </div>
+
+        <!-- Template structure -->
+        <div class="demo-section">
+          <h2 class="font-serif font-bold text-cloudbank text-xl">Understanding Template Structure</h2>
+          <p class="text-sm mb-2">
+            Templates preserve the structure of your string, separating static parts from interpolations.
+            Note: Template iteration may have limitations in this MicroPython build.
+          </p>
+          <textarea id="code-example2" class="code-editor">x = 42
+template = t"The answer is {x}!"
+print(f"Strings: {template.strings}")
+print(f"Interpolations: {template.interpolations}")</textarea>
+          <div class="button-group">
+            <button class="run-button" onclick="runExample(2)">Run Example</button>
+            <button class="reset-button" onclick="resetExample(2)">Reset</button>
+          </div>
+          <div id="output-example2" class="output-box"></div>
+        </div>
+
+        <!-- Interpolation details -->
+        <div class="demo-section">
+          <h2 class="font-serif font-bold text-cloudbank text-xl">Exploring Interpolations</h2>
+          <p class="text-sm mb-2">
+            Each interpolation captures the expression, value, and optional format specification:
+          </p>
+          <textarea id="code-example3" class="code-editor">import math
+template = t"Pi is approximately {math.pi:.2f}"
+
+# Safely access interpolation details
+if hasattr(template, 'interpolations') and template.interpolations:
+    interp = template.interpolations[0]
+    print(f"Expression: '{interp.expression}'")
+    print(f"Value: {interp.value}")
+    print(f"Format spec: '{interp.format_spec}'")</textarea>
+          <div class="button-group">
+            <button class="run-button" onclick="runExample(3)">Run Example</button>
+            <button class="reset-button" onclick="resetExample(3)">Reset</button>
+          </div>
+          <div id="output-example3" class="output-box"></div>
+        </div>
+
+        <!-- Try Your Own Code -->
+        <div class="demo-section">
+          <h2 class="font-serif font-bold text-cloudbank text-xl">Try Your Own Code</h2>
+          <p class="text-sm mb-2">
+            Edit any example above to experiment with t-strings! Click "Run Example" to execute your modified code.
+          </p>
+          <p class="text-sm">
+            <strong>Ideas to try:</strong><br>
+            • Change variable names and values<br>
+            • Add more interpolations<br>
+            • Try different format specifications like <code>{value:.1f}</code> or <code>{name:>10}</code><br>
+            • Create multi-line t-strings with triple quotes
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    let mp = null;
+    let editors = {};
+    
+    // Store original example codes
+    const originalExamples = {
+      1: `name = "World"
+greeting = t"Hello {name}!"
+print(f"Type: {type(greeting)}")
+print(f"Value: {greeting}")`,
+      2: `x = 42
+template = t"The answer is {x}!"
+print(f"Strings: {template.strings}")
+print(f"Interpolations: {template.interpolations}")`,
+      3: `import math
+template = t"Pi is approximately {math.pi:.2f}"
+
+# Safely access interpolation details
+if hasattr(template, 'interpolations') and template.interpolations:
+    interp = template.interpolations[0]
+    print(f"Expression: '{interp.expr}'")
+    print(f"Value: {interp.value}")
+    print(f"Format spec: '{interp.format_spec}'")`
+    };
+    
+    // Initialize CodeMirror editors after MicroPython loads
+    function initializeEditors() {
+      // Initialize CodeMirror for each example
+      for (let i = 1; i <= 3; i++) {
+        const textarea = document.getElementById(`code-example${i}`);
+        if (textarea && !editors[i]) {
+          editors[i] = CodeMirror.fromTextArea(textarea, {
+            mode: 'python',
+            theme: 'monokai',
+            lineNumbers: true,
+            lineWrapping: true,
+            indentUnit: 4,
+            indentWithTabs: false,
+            electricChars: true,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+            gutters: ["CodeMirror-linenumbers"],
+            viewportMargin: Infinity
+          });
+          
+          // Force refresh to ensure proper display
+          setTimeout(() => {
+            editors[i].refresh();
+          }, 100);
+        }
+      }
+    }
+    
+    // Reset example to original code
+    window.resetExample = function(exampleNum) {
+      if (editors[exampleNum] && originalExamples[exampleNum]) {
+        editors[exampleNum].setValue(originalExamples[exampleNum]);
+      }
+    };
+    
+    // Initialize MicroPython
+    async function initMicroPython() {
+      try {
+        const loadingMsg = document.getElementById('loading-message');
+        const demoContent = document.getElementById('demo-content');
+        
+        // Import MicroPython module
+        const { loadMicroPython } = await import('/pyscript/micropython.mjs');
+        
+        // Load MicroPython
+        mp = await loadMicroPython({
+          stdout: (text) => console.log(text),
+          stderr: (text) => console.error(text)
+        });
+        
+        // Hide loading, show content
+        loadingMsg.style.display = 'none';
+        demoContent.style.display = 'block';
+        
+        // Initialize CodeMirror editors
+        initializeEditors();
+        
+        // Debug: Check MicroPython API
+        console.log('MicroPython instance:', mp);
+        console.log('Available methods:', Object.keys(mp));
+        
+      } catch (error) {
+        console.error('Failed to initialize MicroPython:', error);
+        document.getElementById('loading-message').innerHTML = 
+          '<p class="error">Failed to load MicroPython. Please refresh the page.</p>';
+      }
+    }
+    
+    // Store captured output globally
+    window.exampleOutput = [];
+    
+    // Run example code
+    window.runExample = function(exampleNum) {
+      if (!mp) return;
+      
+      const outputDiv = document.getElementById(`output-example${exampleNum}`);
+      
+      if (!outputDiv || !editors[exampleNum]) return;
+      
+      outputDiv.textContent = 'Running...';
+      
+      // Get the code from the CodeMirror editor
+      const code = editors[exampleNum].getValue();
+      
+      try {
+        // Approach: Use globals() to store and retrieve output
+        mp.runPython(`
+# Clear any previous output
+if '_example_output' in globals():
+    del globals()['_example_output']
+
+# Set up capture
+globals()['_example_output'] = []
+globals()['_original_print'] = print
+
+def _capture_print(*args, **kwargs):
+    output = ' '.join(str(arg) for arg in args)
+    globals()['_example_output'].append(output)
+    globals()['_original_print'](*args, **kwargs)
+
+print = _capture_print
+`);
+        
+        // Run the example code
+        mp.runPython(code);
+        
+        // Restore print
+        mp.runPython("print = globals()['_original_print']");
+        
+        // Get output - try multiple methods
+        let output = null;
+        
+        // Method 1: Direct access via globals
+        try {
+          mp.runPython("globals()['_captured_result'] = '\\n'.join(globals()['_example_output'])");
+          
+          // Now try to get it via property access if available
+          if (mp.globals && typeof mp.globals.get === 'function') {
+            output = mp.globals.get('_captured_result');
+          }
+        } catch (e) {
+          console.log('Method 1 failed:', e);
+        }
+        
+        // Method 2: Store in a simple variable and check
+        if (!output) {
+          mp.runPython("_simple_output = '\\n'.join(globals()['_example_output'])");
+          
+          // Check if we can access Python globals directly
+          if (mp.pyodide && mp.pyodide.globals) {
+            output = mp.pyodide.globals.get('_simple_output');
+          } else if (mp.globals) {
+            output = mp.globals._simple_output || mp.globals['_simple_output'];
+          }
+        }
+        
+        // Method 3: Use print to output and capture via stdout
+        if (!output && window.exampleOutput) {
+          output = window.exampleOutput.join('\n');
+        }
+        
+        // Display the output
+        if (output) {
+          outputDiv.textContent = output;
+        } else {
+          // Last resort - show what's in the console
+          outputDiv.textContent = 'Output is visible in the console. Unable to capture for display.';
+        }
+        
+        // Clean up
+        mp.runPython(`
+if '_example_output' in globals():
+    del globals()['_example_output']
+if '_captured_result' in globals():
+    del globals()['_captured_result']
+if '_simple_output' in globals():
+    del globals()['_simple_output']
+`);
+      } catch (error) {
+        console.error('Full error:', error);
+        outputDiv.textContent = `Error: ${error.message}`;
+      }
+    };
+    
+    // Initialize when page loads
+    initMicroPython();
+  </script>
+</body>
+</html>
