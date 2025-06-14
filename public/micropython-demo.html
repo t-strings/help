@@ -154,6 +154,22 @@
         This demo uses our custom MicroPython build with native PEP 750 support.
       </p>
 
+      <div class="bg-wash border border-cloudbank rounded-lg p-3 mt-3 mb-3 text-sm">
+        <p class="font-bold mb-1">⚠️ Experimental Implementation</p>
+        <p>
+          This demo uses an <strong>experimental fork</strong> of MicroPython that implements t-strings.
+          The official MicroPython implementation is still under discussion.
+        </p>
+        <p class="mt-2">
+          • <a href="https://github.com/orgs/micropython/discussions/17497" target="_blank" rel="noopener">
+            MicroPython Discussion #17497
+          </a><br>
+          • <a href="https://github.com/koxudaxi/micropython/commit/28059bec59fa8bba18aadbad28249bfa4444f937" target="_blank" rel="noopener">
+            Experimental Implementation Branch
+          </a>
+        </p>
+      </div>
+
       <div id="loading-message" class="loading">
         <p>Loading MicroPython environment...</p>
       </div>
@@ -254,7 +270,7 @@ template = t"Pi is approximately {math.pi:.2f}"
 # Safely access interpolation details
 if hasattr(template, 'interpolations') and template.interpolations:
     interp = template.interpolations[0]
-    print(f"Expression: '{interp.expr}'")
+    print(f"Expression: '{interp.expression}'")
     print(f"Value: {interp.value}")
     print(f"Format spec: '{interp.format_spec}'")`
     };
